@@ -10,8 +10,8 @@
 
 [Unit]
 Description=Podman affine.service
-Requires=postgresql-app.service affine-app.service
-Before=postgresql-app.service affine-app.service
+Requires=postgresql-app.service redis-app.service affine-app.service
+Before=postgresql-app.service redis-app.service affine-app.service
 
 [Service]
 Environment=PODMAN_SYSTEMD_UNIT=%n
