@@ -35,7 +35,7 @@ agent.write_envfile("database.env", db)
 # - NODE_ENV=production
 # - AFFINE_ADMIN_EMAIL=${AFFINE_ADMIN_EMAIL}
 # - AFFINE_ADMIN_PASSWORD=${AFFINE_ADMIN_PASSWORD}
-
+HOST = data.get('host')
 REDIS_SERVER_HOST= data.get("REDIS_SERVER_HOST", "redis-app")
 DATABASE_URL= data.get("DATABASE_URL", "postgres://affine:affine@postgres:5432/affine")
 POSTGRES_URL = f"postgres://{POSTGRES_USER}:{POSTGRES_PASSWORD}@postgres:5432/{POSTGRES_DB}"
@@ -50,6 +50,8 @@ app_config = {
     "AFFINE_ADMIN_EMAIL": AFFINE_ADMIN_EMAIL,
     "AFFINE_ADMIN_PASSWORD": AFFINE_ADMIN_PASSWORD,
     "NODE_OPTIONS": "--import=./scripts/register.js",
+    "AFFINE_SERVER_HOST": "https://"+HOST,
+    "AFFINE_SERVER_PORT": "3010",
 }
 agent.write_envfile("app.env", app_config)
 # just before starting systemd unit

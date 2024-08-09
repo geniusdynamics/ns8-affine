@@ -24,7 +24,7 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/affine-app.pid \
     --volume affine-config:/root/.affine/config:Z \
     --volume affine-storage:/root/.affine/storage:Z \
     --env-file=%S/state/app.env \
-    ${AFFINE_IMAGE} 'node ./scripts/self-host-predeploy && node ./dist/index.js'
+    ${AFFINE_GRAPHQL_IMAGE} 'node ./scripts/self-host-predeploy && node ./dist/index.js'
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/affine-app.ctr-id -t 10
 ExecReload=/usr/bin/podman kill -s HUP affine-app
 SyslogIdentifier=%u
