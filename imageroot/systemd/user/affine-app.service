@@ -21,10 +21,11 @@ ExecStartPre=-runagent discover-smarthost
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/affine-app.pid \
     --cidfile %t/affine-app.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/affine.pod-id --replace -d --name  affine-app \
+    -v %S/bin/node:/node:Z \
     --volume affine-config:/root/.affine/config:Z \
     --volume affine-storage:/root/.affine/storage:Z \
     --env-file=%S/state/app.env \
-    ${AFFINE_GRAPHQL_IMAGE} 'node ./scripts/self-host-predeploy && node ./dist/index.js'
+    ${AFFINE_GRAPHQL_IMAGE} /bin/bash -c "/node"
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/affine-app.ctr-id -t 10
 ExecReload=/usr/bin/podman kill -s HUP affine-app
 SyslogIdentifier=%u
