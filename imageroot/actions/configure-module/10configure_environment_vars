@@ -52,6 +52,7 @@ app_config = {
     "NODE_OPTIONS": "--import=./scripts/register.js",
     "AFFINE_SERVER_HOST": "https://"+HOST,
     "AFFINE_SERVER_PORT": "3010",
+    PRISMA_ENGINES_MIRROR="https://registry.npmmirror.com/-/binary/prisma"
 }
 agent.write_envfile("app.env", app_config)
 # just before starting systemd unit
