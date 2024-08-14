@@ -13,46 +13,33 @@ import agent
 # If parsing fails, output everything to stderr
 data = json.load(sys.stdin)
 
+# Set email
+rdb = agent.redis_connect(use_replica=True)
+smtp_settings = agent.get_smarthost_settings(rdb)
+SMTP_HOST= smtp_settings['host']
+SMTP_PORT= smtp_settings['port']
+SMTP_USERNAME= smtp_settings['username']
+SMTP_PASSWORD= smtp_settings['password']
+SMTP_ENCRYPTION= smtp_settings['encrypt_smtp']
+SMTP_TLSVERIFY= smtp_settings['tls_verify']
+
 #This is specific to you module, so you need to change it accordingly.
-# we read a json stdin {"vars1":true, "var2":"foo", "vars3": 3} and we writ it to .config/state/environment
-# Upper case to set environment variable and minor case to read from stdin
-#Postgres DB
-POSTGRES_USER= data.get("POSTGRES_USER", "postgres")
-POSTGRES_PASSWORD= data.get("POSTGRES_PASSWORD", "Nethesis@1234")
-POSTGRES_DB= data.get("POSTGRES_DB", "affine")
 
-db = {
-    "POSTGRES_USER": POSTGRES_USER,
-    "POSTGRES_PASSWORD": POSTGRES_PASSWORD,
-    "POSTGRES_DB": POSTGRES_DB,
-}
-agent.write_envfile("database.env", db)
-
-# - NODE_OPTIONS="--import=./scripts/register.js"
-# - AFFINE_CONFIG_PATH=/root/.affine/config
-# - REDIS_SERVER_HOST=redis
-# - DATABASE_URL=postgres://affine:affine@postgres:5432/affine
-# - NODE_ENV=production
-# - AFFINE_ADMIN_EMAIL=${AFFINE_ADMIN_EMAIL}
-# - AFFINE_ADMIN_PASSWORD=${AFFINE_ADMIN_PASSWORD}
 HOST = data.get('host')
-REDIS_SERVER_HOST= data.get("REDIS_SERVER_HOST", "redis-app")
-DATABASE_URL= data.get("DATABASE_URL", "postgres://affine:affine@postgres:5432/affine")
-POSTGRES_URL = f"postgres://{POSTGRES_USER}:{POSTGRES_PASSWORD}@postgresql-app:5432/{POSTGRES_DB}"
 NODE_ENV= data.get("NODE_ENV", "production")
 AFFINE_ADMIN_EMAIL= data.get("AFFINE_ADMIN_EMAIL", "admin")
 AFFINE_ADMIN_PASSWORD= data.get("AFFINE_ADMIN_PASSWORD", "admin1234")
-PRISMA_ENGINES_MIRROR= data.get("PRISMA_ENGINES_MIRROR", "https://registry.npmmirror.com/-/binary/prisma")
 app_config = {
-    "REDIS_SERVER_HOST": REDIS_SERVER_HOST,
-    "DATABASE_URL": POSTGRES_URL,
     "NODE_ENV": NODE_ENV,
     "AFFINE_ADMIN_EMAIL": AFFINE_ADMIN_EMAIL,
     "AFFINE_ADMIN_PASSWORD": AFFINE_ADMIN_PASSWORD,
     "NODE_OPTIONS": "--import=./scripts/register.js",
-    # "AFFINE_SERVER_HOST": "https://"+HOST,
-    # "AFFINE_SERVER_PORT": "3010",
-    "PRISMA_ENGINES_MIRROR": PRISMA_ENGINES_MIRROR
+    "MAILER_HOST": SMTP_HOST,
+    "MAILER_PORT": SMTP_PORT,
+    "MAILER_USER": SMTP_USERNAME,
+    "MAILER_SENDER": SMTP_USERNAME,
+    "MAILER_SECURE": "true",
+    "MAILER_PASSWORD": SMTP_PASSWORD,
 }
 agent.write_envfile("app.env", app_config)
 # just before starting systemd unit
