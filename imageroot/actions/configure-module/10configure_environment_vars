@@ -38,7 +38,7 @@ agent.write_envfile("database.env", db)
 HOST = data.get('host')
 REDIS_SERVER_HOST= data.get("REDIS_SERVER_HOST", "redis-app")
 DATABASE_URL= data.get("DATABASE_URL", "postgres://affine:affine@postgres:5432/affine")
-POSTGRES_URL = f"postgres://{POSTGRES_USER}:{POSTGRES_PASSWORD}@postgres:5432/{POSTGRES_DB}"
+POSTGRES_URL = f"postgres://{POSTGRES_USER}:{POSTGRES_PASSWORD}@postgresql-app:5432/{POSTGRES_DB}"
 NODE_ENV= data.get("NODE_ENV", "production")
 AFFINE_ADMIN_EMAIL= data.get("AFFINE_ADMIN_EMAIL", "admin")
 AFFINE_ADMIN_PASSWORD= data.get("AFFINE_ADMIN_PASSWORD", "admin1234")
