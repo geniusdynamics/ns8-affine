@@ -61,6 +61,29 @@
                 $t("settings.enabled")
               }}</template>
             </cv-toggle>
+
+            <cv-text-input
+                :label="$t('Admin Email')"
+                placeholder="affine@admin.com"
+                v-model="AFFINE_ADMIN_EMAIL"
+                class="mg-bottom"
+                :invalid-message="$t(error.AFFINE_ADMIN_EMAIL)"
+                :disabled="loading.getConfiguration || loading.configureModule"
+                ref="AFFINE_ADMIN_EMAIL"
+            >
+            </cv-text-input>
+
+            <cv-text-input
+                :label="$t('Admin Password')"
+                placeholder="**********"
+                v-model="AFFINE_ADMIN_PASSWORD"
+                class="mg-bottom"
+                :invalid-message="$t(error.AFFINE_ADMIN_PASSWORD)"
+                :disabled="loading.getConfiguration || loading.configureModule"
+                ref="AFFINE_ADMIN_PASSWORD"
+                type="password"
+            >
+            </cv-text-input>
               <!-- advanced options -->
             <cv-accordion ref="accordion" class="maxwidth mg-bottom">
               <cv-accordion-item :open="toggleAccordion[0]">
@@ -125,6 +148,8 @@ export default {
       host: "",
       isLetsEncryptEnabled: false,
       isHttpToHttpsEnabled: true,
+      AFFINE_ADMIN_EMAIL: "",
+      AFFINE_ADMIN_PASSWORD: "",
       loading: {
         getConfiguration: false,
         configureModule: false,
@@ -135,6 +160,8 @@ export default {
         host: "",
         lets_encrypt: "",
         http2https: "",
+        AFFINE_ADMIN_EMAIL: "",
+        AFFINE_ADMIN_PASSWORD: "",
       },
     };
   },
