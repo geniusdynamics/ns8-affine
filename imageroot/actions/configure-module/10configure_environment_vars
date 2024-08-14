@@ -45,13 +45,13 @@ AFFINE_ADMIN_PASSWORD= data.get("AFFINE_ADMIN_PASSWORD", "admin1234")
 PRISMA_ENGINES_MIRROR= data.get("PRISMA_ENGINES_MIRROR", "https://registry.npmmirror.com/-/binary/prisma")
 app_config = {
     "REDIS_SERVER_HOST": REDIS_SERVER_HOST,
-    "DATABASE_URL": DATABASE_URL,
+    "DATABASE_URL": POSTGRES_URL,
     "NODE_ENV": NODE_ENV,
     "AFFINE_ADMIN_EMAIL": AFFINE_ADMIN_EMAIL,
     "AFFINE_ADMIN_PASSWORD": AFFINE_ADMIN_PASSWORD,
     "NODE_OPTIONS": "--import=./scripts/register.js",
-    "AFFINE_SERVER_HOST": "https://"+HOST,
-    "AFFINE_SERVER_PORT": "3010",
+    # "AFFINE_SERVER_HOST": "https://"+HOST,
+    # "AFFINE_SERVER_PORT": "3010",
     "PRISMA_ENGINES_MIRROR": PRISMA_ENGINES_MIRROR
 }
 agent.write_envfile("app.env", app_config)
