@@ -17,6 +17,14 @@ import agent
 # Prepare return variable
 config = {}
 
+if os.path.exists('app.env'):
+    data = agent.read_envfile('app.env')
+    config["AFFINE_ADMIN_EMAIL"] = data["AFFINE_ADMIN_EMAIL"]
+    config["AFFINE_ADMIN_PASSWORD"] = data["AFFINE_ADMIN_PASSWORD"]
+else:
+    config["AFFINE_ADMIN_EMAIL"] = ""
+    config["AFFINE_ADMIN_PASSWORD"] = ""
+
 # Read current configuration from the environment file
 config["host"] = os.getenv("TRAEFIK_HOST","")
 config["http2https"] = os.getenv("TRAEFIK_HTTP2HTTPS") == "True"

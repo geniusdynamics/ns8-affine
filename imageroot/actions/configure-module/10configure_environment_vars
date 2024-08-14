@@ -27,7 +27,7 @@ SMTP_TLSVERIFY= smtp_settings['tls_verify']
 
 HOST = data.get('host')
 NODE_ENV= data.get("NODE_ENV", "production")
-AFFINE_ADMIN_EMAIL= data.get("AFFINE_ADMIN_EMAIL", "admin")
+AFFINE_ADMIN_EMAIL= data.get("AFFINE_ADMIN_EMAIL", "admin@gmail.com")
 AFFINE_ADMIN_PASSWORD= data.get("AFFINE_ADMIN_PASSWORD", "admin1234")
 app_config = {
     "NODE_ENV": NODE_ENV,
