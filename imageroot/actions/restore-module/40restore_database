@@ -9,6 +9,7 @@ set -e -o pipefail
 exec 1>&2 # Redirect any output to the journal (stderr)
 
 mkdir -vp restore
+mv -v affine.pg_dump initdb.d
 cat - >restore/affine_restore.sh <<'EOS'
 # Read dump file from standard input:
 pg_restore --no-owner --no-privileges -U postgres -d affine
@@ -21,17 +22,15 @@ EOS
 # DB dump file. The container will be stopped at the end
 
 podman run \
-    --rm \
-    --interactive \
-    --network=none \
-    --volume=./restore:/docker-entrypoint-initdb.d/:Z \
-    --volume=postgres-data:/var/lib/postgresql/data:Z \
-    --replace --name=restore_db \
-    --env POSTGRES_USER=postgres \
-    --env POSTGRES_PASSWORD=Nethesis,1234 \
-    --env POSTGRES_DB=affine \
-    --env TZ=UTC \
-    "${POSTGRES_IMAGE}" < affine.pg_dump
+	--rm \
+	--interactive \
+	--network=none \
+	--volume=./restore:/docker-entrypoint-initdb.d/:Z \
+	--volume=postgres-data:/var/lib/postgresql/data:Z \
+	--replace --name=restore_db \
+	--env-file database.env \
+	--env TZ=UTC \
+	"${POSTGRES_IMAGE}" <affine.pg_dump
 
 # If the restore is successful, clean up:
 rm -rfv restore/ affine.pg_dump
