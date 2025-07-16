@@ -16,7 +16,7 @@ repobase="${REPOBASE:-ghcr.io/geniusdynamics}"
 reponame="affine"
 
 # APP_VERSION="stable-c5da8dd"
-APP_VERSION="0.23.0"
+APP_VERSION="canary-3949714"
 GRAPHQL_VERSION="canary-011f92f"
 
 # Create a new empty container image
