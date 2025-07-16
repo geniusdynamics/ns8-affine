@@ -16,7 +16,7 @@ repobase="${REPOBASE:-ghcr.io/geniusdynamics}"
 reponame="affine"
 
 # APP_VERSION="stable-c5da8dd"
-APP_VERSION="0.23"
+APP_VERSION="0.23.0"
 
 # Create a new empty container image
 container=$(buildah from scratch)
