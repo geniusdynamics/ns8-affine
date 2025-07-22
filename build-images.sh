@@ -49,7 +49,7 @@ buildah config --entrypoint=/ \
 	--label="org.nethserver.authorizations=traefik@node:routeadm" \
 	--label="org.nethserver.tcp-ports-demand=1" \
 	--label="org.nethserver.rootfull=0" \
-	--label="org.nethserver.images=docker.io/pgvector/pgvector:pg16 ghcr.io/toeverything/affine-graphql:${GRAPHQL_VERSION} ghcr.io/toeverything/affine-front:${APP_VERSION} docker.io/redis:7" \
+	--label="org.nethserver.images=docker.io/pgvector/pgvector:pg16 ghcr.io/toeverything/affine-graphql:${GRAPHQL_VERSION} ghcr.io/toeverything/affine:${APP_VERSION} docker.io/redis:7" \
 	"${container}"
 # Commit the image
 buildah commit "${container}" "${repobase}/${reponame}"
