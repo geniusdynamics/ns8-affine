@@ -16,7 +16,7 @@ repobase="${REPOBASE:-ghcr.io/geniusdynamics}"
 reponame="affine"
 
 # APP_VERSION="stable-c5da8dd"
-APP_VERSION="stable"
+APP_VERSION="stable-c4cf579"
 GRAPHQL_VERSION="0.23.2"
 
 # Create a new empty container image
@@ -49,7 +49,7 @@ buildah config --entrypoint=/ \
 	--label="org.nethserver.authorizations=traefik@node:routeadm" \
 	--label="org.nethserver.tcp-ports-demand=1" \
 	--label="org.nethserver.rootfull=0" \
-	--label="org.nethserver.images=docker.io/pgvector/pgvector:pg16 ghcr.io/toeverything/affine-graphql:${GRAPHQL_VERSION} ghcr.io/toeverything/affine:${APP_VERSION} docker.io/redis:7" \
+	--label="org.nethserver.images=docker.io/pgvector/pgvector:pg16 ghcr.io/toeverything/affine:${APP_VERSION} docker.io/redis:7" \
 	"${container}"
 # Commit the image
 buildah commit "${container}" "${repobase}/${reponame}"
