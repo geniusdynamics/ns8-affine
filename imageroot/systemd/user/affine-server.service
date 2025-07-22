@@ -27,7 +27,7 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/affine-server.pid \
     --volume db-data-storage:/root/.affine/postgres/:Z \
     --env-file=%S/state/app.env \
     --env-file=%S/state/app-db.env \
-    ${AFFINE_IMAGE}
+    ${AFFINE_GRAPHQL_IMAGE}
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/affine-server.ctr-id -t 10
 ExecReload=/usr/bin/podman kill -s HUP affine-server
 SyslogIdentifier=%u
