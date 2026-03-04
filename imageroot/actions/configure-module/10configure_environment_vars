@@ -33,7 +33,7 @@ app_config = {
     "NODE_ENV": NODE_ENV,
     "AFFINE_ADMIN_EMAIL": AFFINE_ADMIN_EMAIL,
     "AFFINE_ADMIN_PASSWORD": AFFINE_ADMIN_PASSWORD,
-    "NODE_OPTIONS": "--import=./scripts/register.js",
+    # "NODE_OPTIONS": "--import=./scripts/register.js",
     "MAILER_HOST": SMTP_HOST,
     "MAILER_PORT": SMTP_PORT,
     "MAILER_USER": SMTP_USERNAME,
