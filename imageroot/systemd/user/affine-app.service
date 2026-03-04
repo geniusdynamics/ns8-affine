@@ -27,7 +27,7 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/affine-app.pid \
     --volume db-data-storage:/root/.affine/postgres/:Z \
     --env-file=%S/state/app.env \
     --env-file=%S/state/app-db.env \
-    ${AFFINE_IMAGE} sh -c "npx prisma migrate deploy && node ./dist/main.js"
+    ${AFFINE_IMAGE} node ./dist/main.js
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/affine-app.ctr-id -t 10
 ExecReload=/usr/bin/podman kill -s HUP affine-app
 SyslogIdentifier=%u
