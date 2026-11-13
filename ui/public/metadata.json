@@ -1,9 +1,13 @@
 {
   "name": "affine",
   "description": {
-    "en": "My affine module"
+    "en": "AFFiNE is a self-hosted workspace that combines documents, whiteboards and databases for notes and team planning.",
+    "it": "AFFiNE è uno spazio di lavoro self-hosted che unisce documenti, lavagne e database per appunti e pianificazione di gruppo."
   },
-  "categories": [],
+  "categories": [
+    "collaboration",
+    "office"
+  ],
   "authors": [
     {
       "name": "Name Surname",

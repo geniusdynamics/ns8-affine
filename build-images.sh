@@ -14,9 +14,12 @@ images=()
 repobase="${REPOBASE:-ghcr.io/geniusdynamics}"
 # Configure the image name
 reponame="affine"
+# renovate: datasource=npm packageName=corepack
+corepack_version=0.36.0
 
 # APP_VERSION="stable-c5da8dd"
-APP_VERSION="0.26.3"
+# renovate: datasource=docker packageName=ghcr.io/toeverything/affine
+APP_VERSION=0.26.3
 GRAPHQL_VERSION="0.23.2"
 
 # Create a new empty container image
@@ -25,7 +28,8 @@ container=$(buildah from scratch)
 # Reuse existing nodebuilder-affine container, to speed up builds
 if ! buildah containers --format "{{.ContainerName}}" | grep -q nodebuilder-affine; then
 	echo "Pulling NodeJS runtime..."
-	buildah from --name nodebuilder-affine -v "${PWD}:/usr/src:Z" docker.io/library/node:lts
+	buildah from --name nodebuilder-affine -v "${PWD}:/usr/src:Z" docker.io/library/node:26.13.0-slim
+	buildah run nodebuilder-affine sh -c "npm install -g corepack@${corepack_version} && corepack enable"
 fi
 
 echo "Build static UI files with node..."
@@ -49,7 +53,8 @@ buildah config --entrypoint=/ \
 	--label="org.nethserver.authorizations=traefik@node:routeadm" \
 	--label="org.nethserver.tcp-ports-demand=1" \
 	--label="org.nethserver.rootfull=0" \
-	--label="org.nethserver.images=docker.io/pgvector/pgvector:pg16 ghcr.io/toeverything/affine:${APP_VERSION} docker.io/redis:7" \
+    --label="org.nethserver.min-core=3.0.0" \
+	--label="org.nethserver.images=docker.io/pgvector/pgvector:pg18 ghcr.io/toeverything/affine:${APP_VERSION} docker.io/redis:8.10.3" \
 	"${container}"
 # Commit the image
 buildah commit "${container}" "${repobase}/${reponame}"
