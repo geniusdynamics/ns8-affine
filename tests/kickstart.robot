@@ -1,6 +1,9 @@
 *** Settings ***
 Library    SSHLibrary
 
+*** Variables ***
+${HOST}    affine.example.org
+
 *** Test Cases ***
 Check if affine is installed correctly
     ${output}  ${rc} =    Execute Command    add-module ${IMAGE_URL} 1
