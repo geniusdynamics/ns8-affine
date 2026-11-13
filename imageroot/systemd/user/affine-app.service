@@ -18,6 +18,15 @@ TimeoutStopSec=70
 ExecStartPre=/bin/mkdir -p config
 ExecStartPre=/bin/rm -f %t/affine-app.pid %t/affine-app.ctr-id
 ExecStartPre=-runagent discover-smarthost
+# Database migrations, as the upstream affine_migration_job does
+ExecStartPre=/usr/bin/podman run --rm --name affine-migration \
+    --pod-id-file %t/affine.pod-id \
+    --volume affine-config:/root/.affine/config/:Z \
+    --volume affine-storage:/root/.affine/storage/:Z \
+    --env-file=%S/state/app.env \
+    --env-file=%S/state/app-db.env \
+    ${AFFINE_IMAGE} node ./scripts/self-host-predeploy.js
+TimeoutStartSec=600
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/affine-app.pid \
     --cidfile %t/affine-app.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/affine.pod-id --replace -d --name  affine-app \
