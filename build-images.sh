@@ -19,7 +19,7 @@ corepack_version=0.36.0
 
 # APP_VERSION="stable-c5da8dd"
 # renovate: datasource=docker packageName=ghcr.io/toeverything/affine
-APP_VERSION=0.26.3
+APP_VERSION=0.27.4
 GRAPHQL_VERSION="0.23.2"
 
 # Create a new empty container image
